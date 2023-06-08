@@ -11,13 +11,12 @@ It's an Islamic android native app have Quran and Azkar and prayer times of all 
 8  MVVM.<br/>
 9  MVI.<br/>
 # screen shot 
-<img src="https://github.com/Abdo8229/Islamic-App/assets/43483864/55a8ba48-e0db-4139-9aba-86235812e93e" width="300">
-<img src="https://github.com/Abdo8229/Islamic-App/assets/43483864/063a47e7-a16b-4ef4-a5d6-c42709b80806" width="300">
-<img src="https://github.com/Abdo8229/Islamic-App/assets/43483864/aeb30eef-658b-4571-a52b-c37f3e71f8de" width="300">
-<img src="https://github.com/Abdo8229/Islamic-App/assets/43483864/f61bae4c-abea-4e52-a090-44713f77becd" width="300">
-<img src="https://github.com/Abdo8229/Islamic-App/assets/43483864/a2c73b96-9e91-4de2-a6b5-d00d5eb00851" width="300">
-<img src="https://github.com/Abdo8229/Islamic-App/assets/43483864/c025e86b-ea45-4bce-b326-6a0bdcc87e52" width="300">
-<img src="https://github.com/Abdo8229/Islamic-App/assets/43483864/f758af99-3851-4f52-a8a0-7cfda26e8986" width="300">
+<img src="https://github.com/Abdo8229/Islamic-App/assets/43483864/9a32caed-fff2-4d27-9c86-efeaf55f5ffb" width="300">
+<img src="https://github.com/Abdo8229/Islamic-App/assets/43483864/35ef4cce-378f-4a59-b96a-ac002909b6a9" width="300">
+<img src="https://github.com/Abdo8229/Islamic-App/assets/43483864/15955517-7525-494f-84eb-ad4ecf2f81ce" width="300">
+<img src="https://github.com/Abdo8229/Islamic-App/assets/43483864/39fd25c1-b34c-42a7-92cc-1364b142d93a" width="300">
+<img src="https://github.com/Abdo8229/Islamic-App/assets/43483864/38246107-2895-488d-ba8a-97c2d57fc4f5" width="300">
+<img src="https://github.com/Abdo8229/Islamic-App/assets/43483864/2dda4a2b-51c1-434d-b3c0-63621853ec27" width="300">
 
 # Permissions
-INTERNET <br/>                                                                                                                                                                      POST_NOTIFICATIONS
+INTERNET <br/>                                                                                                                                                              POST_NOTIFICATIONS
