@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/soraListFragment"
+            android:icon="@drawable/koran"
+            android:title="@string/Quran" />
+        <item
+            android:id="@+id/azkarHomeFragment"
+            android:icon="@drawable/duahands"
+            android:title="@string/Azkar" />
+        <item
+            android:id="@+id/prayerTimesFragment"
+            android:title="@string/PrayerTiming"
+            android:icon="@drawable/praying"
+    />
+    </group>
+</menu>
