@@ -49,6 +49,7 @@ class AzkarTypesAdapter :
             binding = ListItemAzkarTypesBinding.bind(itemView)
         }
 
+        @SuppressLint("SetTextI18n")
         fun bind(zekrTypes: ZekrTypes, position: Int, azkarClickListener: AzkarClickListener?) {
             binding.tvZekerName.text = zekrTypes.zekrName
             val numberFormat : NumberFormat = NumberFormat.getNumberInstance(Locale("ar","EG"))

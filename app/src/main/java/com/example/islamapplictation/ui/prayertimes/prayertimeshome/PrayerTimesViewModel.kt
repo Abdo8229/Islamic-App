@@ -68,7 +68,7 @@ class PrayerTimesViewModel @Inject constructor (private val prayerTimeRepoImp: P
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             when (val prayerTimesResponce = prayerTimeRepoImp
-                    .getPrayerTimes(year, month, city, country, method)) {
+                    .getPrayerTimes(year, month+1, city, country, method)) {
                 is Resource.Error -> _conversion.value =
                     PrayerTimesEvent.Failure(prayerTimesResponce.massage!!)
 
@@ -112,23 +112,6 @@ class PrayerTimesViewModel @Inject constructor (private val prayerTimeRepoImp: P
         res.add(PrayerTiming("Isha", timings.Isha))
 
         _conversionTimigs.value = TimingEvent.Success(res)
-
-//        for(i in 0 ..4) {
-//            Log.d(TAG, "convertFromTimings: ${res[i].prayerName} : ${res[i].prayerTime}")
-//        }
-    }
-//    private val _conversionCities = MutableLiveData<ArrayList<City>>()
-//    val conversionCites: LiveData<ArrayList<City> > = _conversionCities
-
-    //    fun getCities(contex: Context):ArrayList<City> {
-//       _conversionCities.value =  CitiesProvider.getAllCities(contex)
-//        Log.d(TAG, "getCities: ${_conversionCities.value!!.size}")
-//        return CitiesProvider.getAllCities(contex)
-//    }
-    @SuppressLint("SuspiciousIndentation")
-    fun getAllCountries(contex: Context): List<String> {
-        val countries = CitiesProvider.getAllCountries(contex)
-          return countries
     }
 
     fun getAllCitiesOfThisCountry(contex: Context, country: String): ArrayList<CityTypes> {

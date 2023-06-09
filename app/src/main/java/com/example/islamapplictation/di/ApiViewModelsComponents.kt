@@ -13,7 +13,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-const val BASE_URL = "http://api.aladhan.com/"
+const val BASE_URL = "https://api.aladhan.com/"
 
 
 @Module

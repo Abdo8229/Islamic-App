@@ -14,38 +14,29 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.islamapplictation.R
 import com.example.islamapplictation.data.pojo.cities.CityTypes
 import com.example.islamapplictation.data.pojo.prayertimes.PrayerTiming
 import com.example.islamapplictation.databinding.FragmentPrayerTimesBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Calendar
+
 @AndroidEntryPoint
 class PrayerTimesFragment : Fragment() {
     private val TAG = "PrayerTimesFragment"
     private lateinit var binding: FragmentPrayerTimesBinding
     private val viewModel: PrayerTimesViewModel by viewModels()
-    //    by lazy { ViewModelProvider(this)[PrayerTimesViewModel::class.java] }
     private val adapter: PrayerTimesAdapter by lazy { PrayerTimesAdapter(this.requireContext()) }
     private val calendar: Calendar by lazy { Calendar.getInstance() }
     private lateinit var citiesAdapter: CitiesAdapter
-    private lateinit var countriesList: List<String>
+    private val countriesArray: Array<out String> by lazy { resources.getStringArray(R.array.countries) }
     private lateinit var citiesArrayList: ArrayList<CityTypes>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        viewModel = ViewModelProvider(this)[PrayerTimesViewModel::class.java]
-        countriesList = viewModel.getAllCountries(this.requireContext())
-        viewModel.getPrayerTimes(
-            this.requireContext(),
-            calendar[Calendar.YEAR],
-            calendar[Calendar.MONTH],
-            calendar[Calendar.DAY_OF_MONTH],
-            "Alexandria",
-            "Egypt",
-            1
-        )
+
 
         binding = FragmentPrayerTimesBinding.inflate(layoutInflater, container, false)
         // Inflate the layout for this fragment
@@ -64,18 +55,17 @@ class PrayerTimesFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-             if(position!=0)   {
-                    citiesArrayList =
-                        viewModel.getAllCitiesOfThisCountry(
-                            requireContext(),
-                            countriesList[position]
-                        )
-                    setCitiesAdapter()
-                }
+
+                citiesArrayList =
+                    viewModel.getAllCitiesOfThisCountry(
+                        requireContext(),
+                        countriesArray[position].lowercase()
+                    )
+                setCitiesAdapter()
             }
 
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                Log.d(TAG, "onNothingSelected: ")
             }
         }
         binding.spCity.onItemSelectedListener = object : OnItemSelectedListener {
@@ -85,7 +75,7 @@ class PrayerTimesFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-              if(position!=0)  {
+                if (position != 0) {
                     viewModel.getPrayerTimes(
                         requireContext(),
                         calendar[Calendar.YEAR],
@@ -100,10 +90,8 @@ class PrayerTimesFragment : Fragment() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                Log.d(TAG, "onNothingSelected: ")
             }
         }
-
         binding.datePickerActions.init(
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
@@ -127,9 +115,12 @@ class PrayerTimesFragment : Fragment() {
     }
 
     private fun setCountriesAdapter() {
-        val countryList = viewModel.getAllCountries(this.requireContext())
         val arrayAdapter =
-            ArrayAdapter(this.requireContext(), android.R.layout.simple_spinner_item, countryList)
+            ArrayAdapter(
+                this.requireContext(),
+                android.R.layout.simple_list_item_single_choice,
+                countriesArray
+            )
         binding.spCountry.adapter = arrayAdapter
     }
 
@@ -150,7 +141,7 @@ class PrayerTimesFragment : Fragment() {
         )
         binding.rvPrayerTimes.adapter = adapter
         getTimingsData()
-        //        lifecycleData()
+
     }
 
     private fun getTimingsData() {
@@ -177,29 +168,4 @@ class PrayerTimesFragment : Fragment() {
         }
     }
 
-    /** private fun lifecycleData() {
-    lifecycleScope.launchWhenStarted {
-    viewModel.conversion.collect { event ->
-    when (event) {
-    is PrayerTimesViewModel.PrayerTimesEvent.Success -> {
-    }
-
-    is PrayerTimesViewModel.PrayerTimesEvent.Failure -> {
-    }
-
-    is PrayerTimesViewModel.PrayerTimesEvent.Loading -> {
-
-    Log.d(TAG, "lifecycleData: Loading")
-    }
-
-    else -> Unit
-
-
-    }
-
-
-    }
-    }
-    }
-     **/
 }

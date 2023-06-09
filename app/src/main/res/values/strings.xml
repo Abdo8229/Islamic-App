@@ -17,7 +17,17 @@
     <string name="Quran">Quran</string>
     <string name="Azkar">Azkar</string>
     <string name="PrayerTiming">PrayerTiming</string>
-    <string name="from" >بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيم</string>
+    <string name="from">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيم</string>
     <string name="to">TO</string>
     <string name="play_pause">play_pause</string>
+    <string-array name="countries">
+        <item>AE</item>
+        <item>EG</item>
+        <item>DZ</item>
+        <item>IQ</item>
+        <item>JO</item>
+        <item>LY</item>
+        <item>QA</item>
+        <item>SA</item>
+    </string-array>
 </resources>

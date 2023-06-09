@@ -12,9 +12,9 @@ import java.util.stream.Collectors
 
 class CitiesProvider {
     companion object {
-         fun getAllCities(context: Context):ArrayList<City> {
+         fun getAllCities(context: Context , country: String):ArrayList<City> {
             return try {
-                val citiesFile: InputStream = context.assets.open("cities/cities.json")
+                val citiesFile: InputStream = context.assets.open("cities/${country}.json")
                 val size: Int = citiesFile.available()
                 val bytes = ByteArray(size)
                 citiesFile.read(bytes)
@@ -29,22 +29,12 @@ class CitiesProvider {
 
         }
         fun getCityByCountry(context: Context,@NotNull country:String):ArrayList<CityTypes>{
-            return  getAllCities(context)
+            return  getAllCities(context,country)
                 .stream()
-                .filter{city-> country == city.country }
-                .map{city-> CityTypes(city.name,city.country)}
+                .map{city-> CityTypes(city.city,city.country)}
                 .distinct()
                 .collect(Collectors.toCollection { ArrayList() })
 
-        }
-        fun getAllCountries(context: Context):List<String>{
-            return getAllCities(context)
-                .stream()
-                .filter{city-> city.country.isNotEmpty()}
-                .map{city-> city.country}
-                .distinct()
-                .sorted()
-                .collect(Collectors.toList())
         }
     }
 
