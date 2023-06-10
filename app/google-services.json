@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "812193724585",
+    "project_id": "islamic-app-defd7",
+    "storage_bucket": "islamic-app-defd7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812193724585:android:c757fa114c3dcfe95511b8",
+        "android_client_info": {
+          "package_name": "com.example.islamapplictation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812193724585-nnm9vmkd8vmltu7v12fk7271v9ta6vm9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.islamapplictation",
+            "certificate_hash": "3b3039c9a97e693805ed5c5f746376bb1ec0d2c0"
+          }
+        },
+        {
+          "client_id": "812193724585-au2evlfi0008h0704r85muft9c81bdpc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqX_DXc-rA3hduqVv4v-oPTGjt1VMu3MU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "812193724585-au2evlfi0008h0704r85muft9c81bdpc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

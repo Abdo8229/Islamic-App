@@ -20,6 +20,8 @@
     <string name="from">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيم</string>
     <string name="to">TO</string>
     <string name="play_pause">play_pause</string>
+    <string name="elquran_ar">القرأن</string>
+    <string name="al_quran_en">Al-Quran</string>
     <string-array name="countries">
         <item>AE</item>
         <item>EG</item>
@@ -30,4 +32,24 @@
         <item>QA</item>
         <item>SA</item>
     </string-array>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="welcom_back_to_islamic_app">Welcom back to Islamic-App</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forget_password">forget password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_in_with_google">Sign In with Google</string>
+    <string name="create_your_account_with_islamic_app">Create your account with Islamic-App</string>
+    <string name="user_name">Fullname</string>
+<!--    <string name="sign_up_with_google">Sign Up with Google</string>-->
+    <string name="sign_up">Sign UP</string>
+    <string name="confirm_password">Confirm passowrd</string>
 </resources>

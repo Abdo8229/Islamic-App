@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.IslamApplictation" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.IslamApplictation" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/new_primary</item>
 
@@ -34,21 +34,6 @@
         <item name="colorAccent">@color/new_accent1</item>
 
     </style>
-<!--    <style name="Theme.App.Starting" parent="Theme.SplashScreen">-->
-<!--        &lt;!&ndash; Set the splash screen background, animated icon, and animation duration. &ndash;&gt;-->
-<!--        <item name="windowSplashScreenBackground">@color/white</item>-->
-
-<!--        &lt;!&ndash; Use windowSplashScreenAnimatedIcon to add either a drawable or an-->
-<!--             animated drawable. One of these is required. &ndash;&gt;-->
-<!--        <item name="windowSplashScreenAnimatedIcon">@raw/muslim_reads_quran_frist</item>-->
-<!--&lt;!&ndash;        <item name="windowSplashScreenAnimatedIcon"></item>&ndash;&gt;-->
-<!--        &lt;!&ndash; Required for animated icons &ndash;&gt;-->
-<!--        <item name="windowSplashScreenAnimationDuration">300</item>-->
-
-<!--        &lt;!&ndash; Set the theme of the Activity that directly follows your splash screen. &ndash;&gt;-->
-<!--        &lt;!&ndash; Required &ndash;&gt;-->
-<!--        <item name="postSplashScreenTheme">@style/Theme.IslamApplictation</item>-->
-<!--    </style>-->
 
 
 </resources>

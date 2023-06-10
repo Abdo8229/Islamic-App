@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/signin_signup_shape_bg"
+    tools:context=".ui.login.signin.SignInFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/welcom_back_to_islamic_app"
+        android:textAlignment="center"
+        android:textColor="@color/new_primary"
+        android:textSize="18sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signin_ed_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/email"
+        android:textColorHint="@color/new_accent2"
+        app:startIconDrawable="@drawable/round_email_24"
+
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textEmailAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signin_ed_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/password"
+        android:textColorHint="@color/new_accent2"
+        app:endIconMode="password_toggle"
+        app:startIconDrawable="@drawable/outline_lock_open_24"
+
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+<TextView
+    android:id="@+id/signin_tv_forget_password"
+    android:layout_marginTop="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@color/new_accent2"
+    android:text="@string/forget_password"
+    android:textAlignment="textEnd"/>
+
+    <Button
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:id="@+id/signin_btn"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/bottom_bar_bg"
+/>
+    <Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/sign_in_with_google"
+    android:textColor="@color/white"
+    android:textStyle="bold"
+    android:drawableStart="@drawable/google_logo"
+    android:id="@+id/signin_with_google_btn"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/btn_login_bg"
+        />
+    </LinearLayout>
+
+</FrameLayout>

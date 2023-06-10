@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/signin_signup_shape_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.login.signup.SignUpFragment">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="24dp"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/create_your_account_with_islamic_app"
+        android:textAlignment="center"
+        android:textColor="@color/new_primary"
+        android:textSize="18sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signup_full_name_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/user_name"
+        android:textColorHint="@color/new_accent2"
+        app:startIconDrawable="@drawable/round_person_24"
+
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signup_ed_full_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textEmailAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signup_email_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/email"
+        android:textColorHint="@color/new_accent2"
+        app:startIconDrawable="@drawable/round_email_24"
+
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signup_ed_email"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textEmailAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signup_password_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/password"
+        android:textColorHint="@color/new_accent2"
+        app:endIconMode="password_toggle"
+        app:startIconDrawable="@drawable/outline_lock_open_24"
+
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signup_ed_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signup_confirm_password_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/confirm_password"
+        android:textColorHint="@color/new_accent2"
+        app:endIconMode="password_toggle"
+        app:startIconDrawable="@drawable/outline_lock_open_24"
+
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signup_ed_confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:id="@+id/signup_btn"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/bottom_bar_bg"
+        />
+<!--    <Button-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/sign_up_with_google"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textStyle="bold"-->
+<!--        android:drawableStart="@drawable/google_logo"-->
+<!--        android:id="@+id/signin_with_google_btn"-->
+<!--        android:layout_marginHorizontal="12dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:background="@drawable/btn_login_bg"-->
+<!--        />-->
+</LinearLayout>
+
+</FrameLayout>
