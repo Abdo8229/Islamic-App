@@ -1,5 +1,6 @@
 package com.example.islamapplictation.ui.login
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.example.islamapplictation.databinding.ActivityLoginBinding
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlin.math.log
@@ -18,15 +20,20 @@ import kotlin.math.log
 class LoginActivity : AppCompatActivity() {
 
     private val binding : ActivityLoginBinding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
-    private val viewModel:LoginViewModel by lazy { ViewModelProvider(this)[LoginViewModel::class.java] }
     private val fragmentManager : FragmentManager by lazy { supportFragmentManager }
     private val adapter : LoginFragmentsAdapter by lazy { LoginFragmentsAdapter(fragmentManager,lifecycle) }
     private  val TAG = "LoginActivity"
+    private val mAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+
     override  fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContentView(binding.root)
-
+            if (mAuth.currentUser != null) {
+              val intent =  Intent(this, com.example.islamapplictation.MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
             initFragmentAdapter()
 
 

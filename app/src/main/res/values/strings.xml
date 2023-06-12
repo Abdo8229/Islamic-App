@@ -49,7 +49,12 @@
     <string name="sign_in_with_google">Sign In with Google</string>
     <string name="create_your_account_with_islamic_app">Create your account with Islamic-App</string>
     <string name="user_name">Fullname</string>
-<!--    <string name="sign_up_with_google">Sign Up with Google</string>-->
+    <!--    <string name="sign_up_with_google">Sign Up with Google</string>-->
     <string name="sign_up">Sign UP</string>
     <string name="confirm_password">Confirm passowrd</string>
+    <string name="Profile">Profile</string>
+    <string name="al_quran">القرأن</string>
+    <string name="al_azkar">الأذكار</string>
+    <string name="prayer_time_ar">مواقيت الصلاة</string>
+    <string name="log_out">تسجيل خروج</string>
 </resources>

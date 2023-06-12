@@ -34,6 +34,17 @@
         <item name="colorAccent">@color/new_accent1</item>
 
     </style>
+    <style name="ThemeOverlay.AppCompat.navTheme">
 
+        <!-- Color of text and icon when SELECTED -->
+        <item name="colorPrimary">@color/new_accent2</item>
+
+        <!-- Background color when SELECTED -->
+        <item name="colorControlHighlight">#AF6A64</item>
+
+        <item name="iconTint">@color/new_accent2</item>
+
+
+    </style>
 
 </resources>

@@ -3,22 +3,27 @@ package com.example.islamapplictation.ui.login.signup
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.islamapplictation.data.pojo.user.AuthType
+import com.example.islamapplictation.data.pojo.user.User
 import com.example.islamapplictation.databinding.FragmentSignUpBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import kotlin.math.log
 
 
 class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignUpBinding
     private val redColor = ColorStateList.valueOf(Color.RED)
     private val mFireAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
-    private val mDataBase: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
+    private val mDatabase: DatabaseReference by lazy{FirebaseDatabase.getInstance("https://islamic-app-defd7-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users")}
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,12 +36,7 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        binding.signupBtn.setOnClickListener {
-
-           if( allCheck())
-               Toast.makeText(requireContext(), "done", Toast.LENGTH_SHORT).show()
-        }
+        binding.signupBtn.setOnClickListener { registerUserWithEmailAndPassword() }
 
     }
 
@@ -71,6 +71,7 @@ class SignUpFragment : Fragment() {
 
     private fun checkEmail(): Boolean {
         val email = binding.signupEdEmail.text
+        val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$"
         if (email != null) {
             return if (email.isEmpty()) {
                 binding.signupEmailInputLayout.setErrorTextColor(ColorStateList.valueOf(Color.RED))
@@ -81,9 +82,15 @@ class SignUpFragment : Fragment() {
                 binding.signupEmailInputLayout.error = "Email is Invalide"
                 false
             } else {
-                binding.signupEmailInputLayout.error = null
-                binding.signupEmailInputLayout.isErrorEnabled = false
-                true
+                if (!emailRegex.toRegex().matches(email)) {
+                    binding.signupEmailInputLayout.setErrorTextColor(ColorStateList.valueOf(Color.RED))
+                    binding.signupEmailInputLayout.error = "Email is Invalid"
+                    return false
+                } else {
+                    binding.signupEmailInputLayout.error = null
+                    binding.signupEmailInputLayout.isErrorEnabled = false
+                    true
+                }
             }
         } else {
             binding.signupEmailInputLayout.setErrorTextColor(ColorStateList.valueOf(Color.RED))
@@ -102,7 +109,7 @@ class SignUpFragment : Fragment() {
             hasSpecialChar(password)
         )
         val meetsRequirements = requirements.all { it }
-        return if (meetsRequirements) {
+        return if (!meetsRequirements) {
             binding.signupPasswordInputLayout.setErrorTextColor(ColorStateList.valueOf(Color.RED))
             binding.signupPasswordInputLayout.error = "your password is not strong"
             false
@@ -131,39 +138,33 @@ class SignUpFragment : Fragment() {
         return checkFullName() && checkEmail() && checkPassword() && checkConfirmPassword()
     }
 
-    private fun registerUser() {
+    private fun registerUserWithEmailAndPassword() {
         if (allCheck()) {
             val email = binding.signupEdEmail.text
             val password = binding.signupEdPassword.text
             val fullName = binding.signupEdFullName.text
             mFireAuth.createUserWithEmailAndPassword(email.toString(), password.toString())
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        val user = mFireAuth.currentUser
-                        val userMap = hashMapOf(
-                            "fullName" to fullName.toString(),
-                            "email" to email.toString(),
-                            "password" to password.toString(),
-                            "userId" to user?.uid.toString(),
-                            "profileImage" to "",
-                        )
-                        mDataBase.collection("users").document(user?.uid.toString()).set(userMap)
-                            .addOnCompleteListener {
-                                if (it.isSuccessful) {
-                                    binding.signupBtn.visibility = View.VISIBLE
-                                    Snackbar.make(
-                                        requireView(),
-                                        "user created successfully",
-                                        Snackbar.LENGTH_SHORT
-                                    ).show()
-                                    mFireAuth.currentUser?.sendEmailVerification()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val uid = mFireAuth.currentUser?.uid
+                        val mUser = User(email.toString(),fullName.toString(), password.toString(), AuthType.FireBaseEmailPassword.name)
+                        if (uid != null) {
+                            mDatabase.child(uid).setValue(mUser).addOnCompleteListener {
+                                if (it.isSuccessful){
+                                    binding.signupBtn.isClickable = false
+                                    Snackbar.make(requireView(), "You register successfully", Snackbar.LENGTH_SHORT).show()
+                                }else{
+                                    Toast.makeText(requireContext(), "${it.exception?.message}", Toast.LENGTH_SHORT).show()
                                 }
                             }
+                        }
+//
+
                     } else {
                         binding.signupBtn.visibility = View.VISIBLE
                         Snackbar.make(
                             requireView(),
-                            it.exception?.message.toString(),
+                            task.exception?.message.toString(),
                             Snackbar.LENGTH_SHORT
                         ).show()
                     }
@@ -178,6 +179,6 @@ class SignUpFragment : Fragment() {
     private fun isMixedCase(password: String) =
         password.any(Char::isLowerCase) && password.any(Char::isUpperCase)
 
-    private fun hasSpecialChar(password: String) = password.any { it in "!,+^" }
+    private fun hasSpecialChar(password: String) = password.any { it in "!,+^@#&*()_=-!$" }
 
 }

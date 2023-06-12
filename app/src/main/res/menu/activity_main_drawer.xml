@@ -4,18 +4,34 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+
+        <item android:id="@+id/sub"
+            android:title="">
+            <menu>
+                <item
+                    android:id="@+id/soraListFragment"
+                    android:icon="@drawable/quran_logo"
+                    android:title="@string/al_quran" />
+                <item
+                    android:id="@+id/azkarHomeFragment"
+                    android:icon="@drawable/duahands"
+                    android:title="@string/al_azkar" />
+
+                <item
+                    android:id="@+id/prayerTimesFragment"
+                    android:icon="@drawable/praying"
+                    android:title="@string/prayer_time_ar" />
+            </menu>
+
+        </item>
+    </group>
+
+    <group android:checkableBehavior="single">
         <item
-            android:id="@+id/soraListFragment"
-            android:icon="@drawable/koran"
-            android:title="@string/Quran" />
-        <item
-            android:id="@+id/azkarHomeFragment"
-            android:icon="@drawable/duahands"
-            android:title="@string/Azkar" />
-        <item
-            android:id="@+id/prayerTimesFragment"
-            android:title="@string/PrayerTiming"
-            android:icon="@drawable/praying"
-    />
+            android:id="@+id/log_out"
+            android:icon="@drawable/baseline_logout_24"
+            android:title="@string/log_out" />
+
+
     </group>
 </menu>
