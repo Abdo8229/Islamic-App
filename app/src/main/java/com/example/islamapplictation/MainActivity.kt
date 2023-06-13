@@ -3,6 +3,7 @@ package com.example.islamapplictation
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -11,21 +12,30 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.islamapplictation.data.pojo.user.User
 import com.example.islamapplictation.databinding.ActivityMainBinding
 import com.example.islamapplictation.ui.profile.ProfileActivity
 import com.example.islamapplictation.util.AzanPrayeres
 import com.example.islamapplictation.util.CheckPermisions
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
-import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.coroutines.CompletableJob
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 
 @AndroidEntryPoint
@@ -33,9 +43,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private val checkPermissions: CheckPermisions by lazy { CheckPermisions(this) }
-    private  val mAuth : FirebaseAuth by lazy { FirebaseAuth.getInstance()}
-    private val mDatabase: DatabaseReference by lazy{ FirebaseDatabase.getInstance("https://islamic-app-defd7-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users")}
-//    private val mFireStorage:
+    private val mAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+    private val mDatabase: DatabaseReference by lazy { FirebaseDatabase.getInstance().reference }
+    private var users: ArrayList<User> = arrayListOf()
+    private lateinit var user: User
+    private val A = "MainActivity"
+
+    //    private val mFireStorage:
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +63,7 @@ class MainActivity : AppCompatActivity() {
 //            Log.d(TAG, "onCreate: ${quranDataBase.getSoraByNumber(1)}")
 //        }
         checkPermissions.checkPermission()
+
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -78,10 +93,13 @@ class MainActivity : AppCompatActivity() {
             goToProfileActivity()
         }
 //        val profileImage = headerView.findViewById(R.id.img_user_profile) as CircleImageView
-       val userName = headerView.findViewById(R.id.tv_user_name) as TextView
-       mDatabase.child(mAuth.currentUser!!.uid).get().addOnSuccessListener {
-           userName.text = it.child("name").value.toString()
-       }
+        val userName = headerView.findViewById(R.id.tv_user_name) as TextView
+
+        Log.d(A, "onCreate: ${mAuth.currentUser!!.uid}")
+
+        once()
+        Log.d(A, "onCreate:${users.size} ")
+//        Log.d(A, "onCreate:${users[0]} ")
 
         val toggle = ActionBarDrawerToggle(
             this,
@@ -94,11 +112,28 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
 
 
-
-
     }
 
+private fun once(){
+//    mDatabase.database.getReference("Users").child(mAuth.currentUser!!.uid).get().addOnSuccessListener {
+//        user = it.getValue(User::class.java)!!
+//        Log.d(A, "onCreate: ${user.fullName} ")
+//    }
+    mDatabase.child("Users").addValueEventListener(object : ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            for(data in snapshot.children) {
+                users.add(data.getValue(User::class.java)!!)
+                Log.d(A, "onDataChange: ${data.getValue(User::class.java)!!.fullName} ")
+            }
 
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            Log.d(A, "onCancelled: ${error.message}")
+        }
+    })
+
+}
 //   private fun setTextColorForMenuItem(menuItem: MenuItem, @ColorRes color: Int) {
 //        val spanString = SpannableString(menuItem.title.toString())
 //        spanString.setSpan(

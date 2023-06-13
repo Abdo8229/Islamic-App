@@ -21,12 +21,14 @@ import com.example.islamapplictation.MainActivity
 import com.example.islamapplictation.R
 import com.example.islamapplictation.databinding.FragmentSoraListBinding
 import com.example.islamapplictation.data.pojo.Sora
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class SoraListFragment : Fragment() {
     private val viewModel: SoraListViewModel by activityViewModels()
     private var soraArrayList: ArrayList<Sora> = ArrayList()
     private lateinit var binding: FragmentSoraListBinding
-    private val TAG = "SoraListFragment"
+//    private val TAG = "SoraListFragment"
     private val adapter: SoraListAdapter by lazy {
         SoraListAdapter()
     }
@@ -110,7 +112,7 @@ class SoraListFragment : Fragment() {
     }
 
     private fun recursiveLifecycle() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.soraListStatusStateFlow.collect { event ->
                 when (event) {
                     is SoraListStatus.Success -> {
@@ -137,4 +139,11 @@ class SoraListFragment : Fragment() {
             }
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.searchView.clearFocus()
+        viewLifecycleOwner.lifecycleScope.cancel()
+    }
+
 }

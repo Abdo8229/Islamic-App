@@ -57,4 +57,11 @@
     <string name="al_azkar">الأذكار</string>
     <string name="prayer_time_ar">مواقيت الصلاة</string>
     <string name="log_out">تسجيل خروج</string>
+    <string name="change_profile_picture">Change Profile Picture</string>
+    <string name="choose_quran_voice">Quran voice</string>
+    <string name="choose_prayer_time_method">Prayer time method</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="save">Save</string>
+    <string name="know_more_about_prayer_time_method">Know more about prayer time method</string>
 </resources>

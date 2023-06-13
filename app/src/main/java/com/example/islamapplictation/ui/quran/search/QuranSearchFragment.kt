@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -18,7 +19,9 @@ import com.example.islamapplictation.databinding.FragmentQuranSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class QuranSearchFragment : Fragment() {
@@ -69,7 +72,7 @@ class QuranSearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                GlobalScope.launch(Dispatchers.IO) {
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     ayaArrayList = viewModle.getSearchResults(newText.toString())
                 }
                 adapter.setDataList(ayaArrayList)
