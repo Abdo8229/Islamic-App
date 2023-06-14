@@ -1,7 +1,10 @@
 package com.example.islamapplictation.ui.profile
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.islamapplictation.data.citiesprovider.CitiesProvider
+import com.example.islamapplictation.data.pojo.cities.CityTypes
 import com.example.islamapplictation.data.pojo.quranvoice.FilterdQuranVoice
 import com.example.islamapplictation.data.pojo.quranvoice.QuranVoice
 import com.example.islamapplictation.data.remote.quranvoiceservice.QuranFilteredVoiceUseCase
@@ -22,8 +25,8 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(val quranFilteredVoiceUseCase: QuranFilteredVoiceUseCase) :
     ViewModel() {
 
- private var _quranVoceMutableStateFlow  =     MutableStateFlow<List<FilterdQuranVoice>>  (emptyList<FilterdQuranVoice>())
-        val quranFilterdStateFlow: StateFlow<List<FilterdQuranVoice>> = _quranVoceMutableStateFlow
+ private var _quranVoceMutableStateFlow   =     MutableStateFlow<ArrayList<FilterdQuranVoice>>  (ArrayList())
+        val quranFilterdStateFlow: StateFlow<ArrayList<FilterdQuranVoice>> = _quranVoceMutableStateFlow
     suspend fun getFilteredQuranVoices() {
         viewModelScope.launch (Dispatchers.IO){
             when (val useCase = quranFilteredVoiceUseCase.invoke()) {
@@ -38,12 +41,14 @@ class ProfileViewModel @Inject constructor(val quranFilteredVoiceUseCase: QuranF
         }
     }
 
+    fun getAllCitiesOfThisCountry(contex: Context, country: String): ArrayList<CityTypes> {
+        val cities = CitiesProvider.getCityByCountry(contex, country)
+        return cities
+    }
     override fun onCleared() {
         super.onCleared()
         viewModelScope.cancel()
     }
-
-
 }
 
 

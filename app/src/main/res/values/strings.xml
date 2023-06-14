@@ -32,6 +32,24 @@
         <item>QA</item>
         <item>SA</item>
     </string-array>
+    <string-array name="prayerTimeMethods">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+    </string-array>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -63,5 +81,5 @@
     <string name="country">Country</string>
     <string name="city">City</string>
     <string name="save">Save</string>
-    <string name="know_more_about_prayer_time_method">Know more about prayer time method</string>
+    <string name="know_more_about_prayer_time_method">Click to : Know more about prayer time method</string>
 </resources>

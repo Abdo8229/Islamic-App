@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -29,7 +28,7 @@ class PrayerTimesFragment : Fragment() {
     private val viewModel: PrayerTimesViewModel by viewModels()
     private val adapter: PrayerTimesAdapter by lazy { PrayerTimesAdapter(this.requireContext()) }
     private val calendar: Calendar by lazy { Calendar.getInstance() }
-    private lateinit var citiesAdapter: CitiesAdapter
+    private lateinit var twoTypesSpinnerStringAdapter: TwoTypesSpinnerStringAdapter<CityTypes>
     private val countriesArray: Array<out String> by lazy { resources.getStringArray(R.array.countries) }
     private lateinit var citiesArrayList: ArrayList<CityTypes>
     override fun onCreateView(
@@ -126,8 +125,8 @@ class PrayerTimesFragment : Fragment() {
 
     private fun setCitiesAdapter() {
 
-        citiesAdapter = CitiesAdapter(this.requireContext(), citiesArrayList)
-        binding.spCity.adapter = citiesAdapter
+        twoTypesSpinnerStringAdapter = TwoTypesSpinnerStringAdapter(TwoStingSTypeArrayList.Cites(citiesArrayList),this.requireContext(), citiesArrayList)
+        binding.spCity.adapter = twoTypesSpinnerStringAdapter
 
 
     }
