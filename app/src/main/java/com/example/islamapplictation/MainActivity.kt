@@ -66,6 +66,9 @@ class MainActivity : AppCompatActivity() {
 
 //        UpdateQuranDataBase(this).updateDataBase()
 
+
+
+
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -81,6 +84,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.prayerTimesFragment
             ), drawerLayout
         )
+
+
+
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         AzanPrayeres.registerPrayers(this)

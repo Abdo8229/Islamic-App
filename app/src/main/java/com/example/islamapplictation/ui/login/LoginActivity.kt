@@ -22,7 +22,7 @@ class LoginActivity : AppCompatActivity() {
     private val binding : ActivityLoginBinding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
     private val fragmentManager : FragmentManager by lazy { supportFragmentManager }
     private val adapter : LoginFragmentsAdapter by lazy { LoginFragmentsAdapter(fragmentManager,lifecycle) }
-    private  val TAG = "LoginActivity"
+//    private  val TAG = "LoginActivity"
     private val mAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     override  fun onCreate(savedInstanceState: Bundle?) {
