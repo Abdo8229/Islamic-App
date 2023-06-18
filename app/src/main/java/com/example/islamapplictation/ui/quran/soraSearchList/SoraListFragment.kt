@@ -143,7 +143,7 @@ class SoraListFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         binding.searchView.clearFocus()
-        viewLifecycleOwner.lifecycleScope.cancel()
+//        viewLifecycleOwner.lifecycleScope.cancel()
     }
 
 }

@@ -25,6 +25,9 @@ class LoginActivity : AppCompatActivity() {
 //    private  val TAG = "LoginActivity"
     private val mAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
+
+
+
     override  fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
@@ -35,7 +38,6 @@ class LoginActivity : AppCompatActivity() {
                 finish()
             }
             initFragmentAdapter()
-
 
           this.binding.loginTabLayout.addOnTabSelectedListener(object:TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {

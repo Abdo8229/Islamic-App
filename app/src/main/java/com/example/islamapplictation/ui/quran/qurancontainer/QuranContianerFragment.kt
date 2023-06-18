@@ -20,6 +20,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.islamapplictation.R
 import com.example.islamapplictation.databinding.FragmentQuranContianerBinding
+import com.example.islamapplictation.prayersnotifivcation.PrayersPreferences
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -153,7 +154,7 @@ class QuranContianerFragment : Fragment() {
     private fun playAudio() {
         if (!exoPlayer.isPlaying) {
             val audioUrl =
-                "https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/${soraNumber}.mp3"
+                "https://cdn.islamic.network/quran/audio-surah/128/${PrayersPreferences(requireContext()).quranVoiceIdentifier}/${soraNumber}.mp3"
             exoPlayer.also { exoPlayer ->
                 val mediaPlayer = MediaItem.fromUri(audioUrl)
                 exoPlayer.setMediaItem(mediaPlayer)

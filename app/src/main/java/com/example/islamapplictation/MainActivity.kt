@@ -1,8 +1,11 @@
 package com.example.islamapplictation
 
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
@@ -10,6 +13,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +24,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.islamapplictation.data.pojo.user.User
 import com.example.islamapplictation.databinding.ActivityMainBinding
+import com.example.islamapplictation.prayersnotifivcation.PrayersPreferences
 import com.example.islamapplictation.ui.profile.ProfileActivity
 import com.example.islamapplictation.util.AzanPrayeres
 import com.example.islamapplictation.util.CheckPermisions
@@ -31,6 +36,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,11 +46,13 @@ import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    private lateinit var navView: NavigationView
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private val checkPermissions: CheckPermisions by lazy { CheckPermisions(this) }
     private val mAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
-    private val mDatabase: DatabaseReference by lazy { FirebaseDatabase.getInstance().reference }
+
+    //    private val mDatabase: DatabaseReference by lazy { FirebaseDatabase.getInstance().reference }
     private var users: ArrayList<User> = arrayListOf()
     private lateinit var user: User
     private val A = "MainActivity"
@@ -66,11 +74,8 @@ class MainActivity : AppCompatActivity() {
 
 //        UpdateQuranDataBase(this).updateDataBase()
 
-
-
-
         val drawerLayout: DrawerLayout = binding.drawerLayout
-        val navView: NavigationView = binding.navView
+        navView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -96,15 +101,6 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        val headerView: View = navView.getHeaderView(0)
-        val llProfile: LinearLayout = headerView.findViewById(R.id.nav_header)
-        llProfile.setOnClickListener {
-            goToProfileActivity()
-        }
-//        val profileImage = headerView.findViewById(R.id.img_user_profile) as CircleImageView
-        val userName = headerView.findViewById(R.id.tv_user_name) as TextView
-
-        Log.d(A, "onCreate: ${mAuth.currentUser!!.uid}")
 
         once()
         Log.d(A, "onCreate:${users.size} ")
@@ -123,42 +119,43 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-private fun once(){
-//    mDatabase.database.getReference("Users").child(mAuth.currentUser!!.uid).get().addOnSuccessListener {
-//        user = it.getValue(User::class.java)!!
-//        Log.d(A, "onCreate: ${user.fullName} ")
-//    }
-    mDatabase.child("Users").addValueEventListener(object : ValueEventListener {
-        override fun onDataChange(snapshot: DataSnapshot) {
-            for(data in snapshot.children) {
-                users.add(data.getValue(User::class.java)!!)
-                Log.d(A, "onDataChange: ${data.getValue(User::class.java)!!.fullName} ")
-            }
-
+    private fun once() {
+        val headerView: View = navView.getHeaderView(0)
+        val llProfile: LinearLayout = headerView.findViewById(R.id.nav_header)
+        llProfile.setOnClickListener {
+            goToProfileActivity()
         }
-
-        override fun onCancelled(error: DatabaseError) {
-            Log.d(A, "onCancelled: ${error.message}")
+        val profileImage = headerView.findViewById(R.id.img_user_profile) as CircleImageView
+        if (PrayersPreferences(baseContext).profileImageString == null) {
+            profileImage.setImageResource(R.drawable.round_person_24)
+        } else {
+            val imageBytes = Base64.decode(PrayersPreferences(baseContext).profileImageString, 0)
+            val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+            profileImage.setImageBitmap(image)
         }
-    })
+        val userName = headerView.findViewById(R.id.tv_user_email) as TextView
+        userName.text = mAuth.currentUser!!.email
 
-}
-//   private fun setTextColorForMenuItem(menuItem: MenuItem, @ColorRes color: Int) {
-//        val spanString = SpannableString(menuItem.title.toString())
-//        spanString.setSpan(
-//            ForegroundColorSpan(ContextCompat.getColor(this, color)),
-//            0,
-//            spanString.length,
-//            0
-//        )
-//        menuItem.title = spanString
-//    }
-
-//    @SuppressLint("SuspiciousIndentation", "ResourceType")
-//    private fun resetAllMenuItemsTextColor(navigationView: NavigationView) {
-//        for (i in navigationView.menu.size.rangeTo(3))
-//            setTextColorForMenuItem(navigationView.menu.getItem(i), Color.BLACK)
-//    }
+////    mDatabase.database.getReference("Users").child(mAuth.currentUser!!.uid).get().addOnSuccessListener {
+////        user = it.getValue(User::class.java)!!
+////        Log.d(A, "onCreate: ${user.fullName} ")
+////    }
+//    mDatabase.child("Users").addValueEventListener(object : ValueEventListener {
+//        override fun onDataChange(snapshot: DataSnapshot) {
+//            for(data in snapshot.children) {
+//                users.add(data.getValue(User::class.java)!!)
+//                Log.d(A, "onDataChange: ${data.getValue(User::class.java)!!.fullName} ")
+//
+//            }
+//
+//        }
+//
+//        override fun onCancelled(error: DatabaseError) {
+//            Log.d(A, "onCancelled: ${error.message}")
+//        }
+//    })
+//
+    }
 
 
     override fun onSupportNavigateUp(): Boolean {
