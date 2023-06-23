@@ -19,12 +19,5 @@ interface PrayerTimesApiService {
         @Query("method")method:Int
     ): Response<PrayerTimesResponce>
 
-    @GET("v1/calendarByCity/{year}/{month}")
-      fun getAllPrayerTimesForAzan(
-        @Path("year") year: Int,
-        @Path("month") month: Int,
-        @Query("city") city: String,
-        @Query("country")country:String,
-        @Query("method")method:Int
-    ): Call<PrayerTimesResponce>
+
 }

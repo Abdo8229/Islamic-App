@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.icu.util.Calendar
 import android.util.Log
+import androidx.hilt.work.HiltWorker
+import androidx.work.CoroutineWorker
 import androidx.work.Data
 import  com.example.islamapplictation.data.pojo.prayertimes.Data as Data1
 import androidx.work.ExistingWorkPolicy
@@ -18,8 +20,15 @@ import com.example.islamapplictation.data.pojo.prayertimes.Timings
 import com.example.islamapplictation.data.remote.prayertimes.ApiServiceCreation
 import com.example.islamapplictation.data.remote.prayertimes.PrayerTimesApiService
 import com.example.islamapplictation.data.remote.prayertimes.prayertimerepo.PrayerTimeRepoImp
+import com.example.islamapplictation.util.Resource
 import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,53 +38,89 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.abs
 
-class RegisterPrayerTimeWorker (
-   val context: Context,
- workerParams: WorkerParameters
-) : Worker(
+@HiltWorker
+class RegisterPrayerTimeWorker @AssistedInject constructor(
+    private val apiRepoImp: PrayerTimeRepoImp,
+    @Assisted context: Context,
+    @Assisted workerParams: WorkerParameters
+) : CoroutineWorker(
     context,
     workerParams
 ) {
     private val TAG = "PrayerTimes"
-    private var prayerTimesList: List<Data1> = listOf()
-    override fun doWork(): Result {
+//    private var prayerTimesList: List<Data1> = listOf()
+
+    override suspend fun doWork(): Result {
+        val sharedPreferences = PrayersPreferences(this.applicationContext)
         val calendar: Calendar = Calendar.getInstance()
         val year = calendar[Calendar.YEAR]
-        val month = calendar[Calendar.MONTH]+1
-//        val day = calendar[Calendar.DAY_OF_MONTH]
-        val sharedPreferences = PrayersPreferences(context.applicationContext)
-        val country = "Egypt"
-        val city = "Alexandria"
-//        val country = sharedPreferences.country
-//        val city = sharedPreferences.city
+        val month = calendar[Calendar.MONTH] + 1
+        val country = sharedPreferences.city
+        val city = sharedPreferences.country
         val method = sharedPreferences.method
 
-        val api1 : PrayerTimesApiService by lazy {
-            ApiServiceCreation().getPrayerTimeApi()
+//        val api1: PrayerTimesApiService by lazy {
+//            ApiServiceCreation().getPrayerTimeApi()
+//        }
+
+        return withContext(Dispatchers.IO) {
+            when (val api = apiRepoImp.getPrayerTimes(
+                year,
+                month,
+                city ?: "Alexandria",
+                country ?: "Cairo",
+                method ?: 3
+            )
+            ) {
+                is Resource.Success -> {
+                    val data = api.data?.data
+                    if (data != null) {
+                        if (data.size == 30 || data.size == 31)
+                            Log.d(TAG, "onResponse: ${data.size}")
+//                    prayerTimesList = data
+                        makeWorker(data, year, month)
+                    }
+                    Result.success()
+                }
+
+                is Resource.Error -> {
+                    Log.d(TAG, "onFailure: ${api.massage} & Error Code = ${api.data!!.code}")
+                    Result.failure()
+                }
+
+            }
         }
 
-        api1.getAllPrayerTimesForAzan(year,month,city,country,method!!).enqueue(object : Callback<PrayerTimesResponce> {
-            override fun onResponse(
-                call: Call<PrayerTimesResponce>,
-                response: Response<PrayerTimesResponce>
-            ) {
-                Log.d(TAG, "onResponse: ${call.request().url}")
-                val data = response.body()?.data
-                if (data != null) {
-                    if (data.size == 30 || data.size == 31)
-                        Log.d(TAG, "onResponse: ${data.size}")
-                    prayerTimesList = data
-                    makeWorker(data, year, month)
-                }
-            }
 
-            override fun onFailure(call: Call<PrayerTimesResponce>, t: Throwable) {
-                Log.d(TAG, "onFailure: ${t.message}")
-                 }
+        /**        api1.getAllPrayerTimesForAzan(
+        year,
+        month,
+        city ?: "Alexandria",
+        country ?: "Cairo",
+        method!!
+        )
+        .enqueue(object : Callback<PrayerTimesResponce> {
+        override fun onResponse(
+        call: Call<PrayerTimesResponce>,
+        response: Response<PrayerTimesResponce>
+        ) {
+        Log.d(TAG, "onResponse: ${call.request().url}")
+        val data = response.body()?.data
+        if (data != null) {
+        if (data.size == 30 || data.size == 31)
+        Log.d(TAG, "onResponse: ${data.size}")
+        prayerTimesList = data
+        makeWorker(data, year, month)
+        }
+        }
+
+        override fun onFailure(call: Call<PrayerTimesResponce>, t: Throwable) {
+        Log.d(TAG, "onFailure: ${t.message}")
+        }
         })
-
-              return Result.success()
+         */
     }
+
     private fun makeWorker(
         data: List<Data1>?,
         year: Int,
@@ -83,7 +128,6 @@ class RegisterPrayerTimeWorker (
     ) {
         if (!data.isNullOrEmpty()) {
             for (i in data.indices) {
-
                 val timings: Timings = data[i].timings
                 val prayers = convertFromTimings(timings)
                 val day = i + 1

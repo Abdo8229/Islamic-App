@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "812193724585-nnm9vmkd8vmltu7v12fk7271v9ta6vm9.apps.googleusercontent.com",
+          "client_id": "812193724585-ro75ji5kni5v1bn32620quk8u2un93ba.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.islamapplictation",
-            "certificate_hash": "3b3039c9a97e693805ed5c5f746376bb1ec0d2c0"
+            "certificate_hash": "aa6fe27340982729729ee41068487f856dc79f1f"
           }
         },
         {
