@@ -12,7 +12,7 @@ import java.util.stream.Collectors
 
 class CitiesProvider {
     companion object {
-         fun getAllCities(context: Context , country: String):ArrayList<City> {
+         private fun getAllCities(context: Context, country: String):ArrayList<City> {
             return try {
                 val citiesFile: InputStream = context.assets.open("cities/${country}.json")
                 val size: Int = citiesFile.available()
@@ -29,6 +29,7 @@ class CitiesProvider {
 
         }
         fun getCityByCountry(context: Context,@NotNull country:String):ArrayList<CityTypes>{
+            if (country.isEmpty()) return ArrayList()
             return  getAllCities(context,country)
                 .stream()
                 .map{city-> CityTypes(city.city,city.country)}
