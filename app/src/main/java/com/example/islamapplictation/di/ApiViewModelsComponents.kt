@@ -23,7 +23,7 @@ const val QURAN_VOICES_BASE_URL = "https://raw.githubusercontent.com/"
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiViewModelsComponents {
+object ApiViewModelsComponents  {
 
     @Provides
     @Singleton
