@@ -2,6 +2,7 @@ package com.example.islamapplictation.data.pojo
 
 import androidx.annotation.NonNull
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "quran")
@@ -12,7 +13,6 @@ data class Aya(
      val sora: Int,
     @NonNull
      val sora_name_en: String,
-
     @NonNull
      val sora_name_ar: String,
 

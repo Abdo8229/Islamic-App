@@ -11,7 +11,7 @@ import com.example.islamapplictation.data.pojo.cities.CityTypes
 import com.example.islamapplictation.data.pojo.quranvoice.FilterdQuranVoice
 
 class TwoTypesSpinnerStringAdapter<T>(
-    val type: TwoStingSTypeArrayList,
+    val type: List<String>,
     context: Context,
     private val cityArrayList: ArrayList<T>
 ) :
@@ -31,20 +31,15 @@ class TwoTypesSpinnerStringAdapter<T>(
     private fun initView(position: Int, _convertView: View?, parent: ViewGroup): View {
         var convertView: View? = _convertView
         return if (convertView == null) {
+
+
             convertView =
                 LayoutInflater.from(context).inflate(R.layout.list_item_spinner, parent, false)
-            if (type is TwoStingSTypeArrayList.Cites) {
-                val cityTextView = convertView.findViewById(R.id.spCity) as TextView
-                cityTextView.text = type.citesArrayList[position].city
-                val countryTextView = convertView.findViewById(R.id.spCountry) as TextView
-                countryTextView.text = type.citesArrayList[position].country
-            } else if (type is TwoStingSTypeArrayList.QuranVoices) {
-                val cityTextView = convertView.findViewById(R.id.spCity) as TextView
-                cityTextView.text = type.filteredQuranVoicesArrayList[position].name
-                val countryTextView = convertView.findViewById(R.id.spCountry) as TextView
-//                countryTextView.text = type.filteredQuranVoicesArrayList[position].identifier
-                countryTextView.visibility = View.GONE
-            }
+            val countryTextView = convertView.findViewById(R.id.spCountry) as TextView
+            countryTextView.visibility = View.GONE
+
+            val cityTextView = convertView.findViewById(R.id.spCity) as TextView
+            cityTextView.text = type[position]
             convertView
         } else {
             convertView

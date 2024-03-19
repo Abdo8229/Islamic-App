@@ -125,7 +125,9 @@ class PrayerTimesFragment : Fragment() {
 
     private fun setCitiesAdapter() {
 
-        twoTypesSpinnerStringAdapter = TwoTypesSpinnerStringAdapter(TwoStingSTypeArrayList.Cites(citiesArrayList),this.requireContext(), citiesArrayList)
+        twoTypesSpinnerStringAdapter = TwoTypesSpinnerStringAdapter(citiesArrayList.map {
+                                                                                        it.toString()
+        },this.requireContext(), citiesArrayList)
         binding.spCity.adapter = twoTypesSpinnerStringAdapter
 
 
