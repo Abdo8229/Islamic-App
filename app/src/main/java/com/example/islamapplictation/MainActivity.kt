@@ -1,8 +1,8 @@
 package com.example.islamapplictation
 
-import android.Manifest
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
@@ -13,8 +13,10 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -27,6 +29,7 @@ import com.example.islamapplictation.ui.profile.ProfileActivity
 import com.example.islamapplictation.util.AzanPrayeres
 import com.example.islamapplictation.util.CheckPermisions
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -37,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private val checkPermissions: CheckPermisions by lazy { CheckPermisions(this) }
+    private val mAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     //    private val mDatabase: DatabaseReference by lazy { FirebaseDatabase.getInstance().reference }
     private var users: ArrayList<User> = arrayListOf()
@@ -105,15 +109,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     private fun once() {
-        requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),15)
         val headerView: View = navView.getHeaderView(0)
         val llProfile: LinearLayout = headerView.findViewById(R.id.nav_header)
         llProfile.setOnClickListener {
             goToProfileActivity()
         }
-        val profileImage = headerView.findViewById(R.id.img_user_profile) as CircleImageView
+        val profileImage: CircleImageView = headerView.findViewById(R.id.img_user_profile)
         if (PrayersPreferences(baseContext).profileImageString == null || PrayersPreferences(
                 baseContext
             ).profileImageString!!.isEmpty()
@@ -124,8 +126,8 @@ class MainActivity : AppCompatActivity() {
             val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
             profileImage.setImageBitmap(image)
         }
-        val userName = headerView.findViewById(R.id.tv_user_email) as TextView
-        userName.text = "abdo"
+        val userName: TextView = headerView.findViewById(R.id.tv_user_email)
+        userName.text = mAuth.currentUser!!.email
 
 ////    mDatabase.database.getReference("Users").child(mAuth.currentUser!!.uid).get().addOnSuccessListener {
 ////        user = it.getValue(User::class.java)!!
@@ -161,7 +163,7 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        checkPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        checkPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
 

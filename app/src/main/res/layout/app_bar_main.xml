@@ -12,14 +12,14 @@
         android:layout_height="wrap_content"
         android:outlineSpotShadowColor="#FFFF"
         android:outlineAmbientShadowColor="#FFFF"
-        android:theme="@style/Theme.IslamApplictation">
+        android:theme="@style/Theme.IslamApplication">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="#FFFFFF"
-            app:popupTheme="@style/Theme.IslamApplictation" />
+            app:popupTheme="@style/Theme.IslamApplication" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

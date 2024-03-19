@@ -16,14 +16,18 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import kotlin.math.log
 
 
 class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignUpBinding
     private val redColor = ColorStateList.valueOf(Color.RED)
     private val mFireAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
-    private val mDatabase: DatabaseReference by lazy{FirebaseDatabase.getInstance("https://islamic-app-defd7-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users")}
+    private val mDatabase: DatabaseReference by lazy {
+        FirebaseDatabase.getInstance()
+            .getReference("Users")
+    }
+    private val TAG = "SignUpFragment"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,7 +83,7 @@ class SignUpFragment : Fragment() {
                 false
             } else if (!email.contains("@") || !email.contains(".com")) {
                 binding.signupEmailInputLayout.setErrorTextColor(ColorStateList.valueOf(Color.RED))
-                binding.signupEmailInputLayout.error = "Email is Invalide"
+                binding.signupEmailInputLayout.error = "Email is Invalid"
                 false
             } else {
                 if (!emailRegex.toRegex().matches(email)) {
@@ -135,7 +139,9 @@ class SignUpFragment : Fragment() {
     }
 
     private fun allCheck(): Boolean {
-        return checkFullName() && checkEmail() && checkPassword() && checkConfirmPassword()
+        return checkFullName() && checkEmail()
+//                && checkPassword()
+                && checkConfirmPassword()
     }
 
     private fun registerUserWithEmailAndPassword() {
@@ -147,14 +153,27 @@ class SignUpFragment : Fragment() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val uid = mFireAuth.currentUser?.uid
-                        val mUser = User(email.toString(),fullName.toString(), password.toString(), AuthType.FireBaseEmailPassword.name)
+                        val mUser = User(
+                            email.toString(),
+                            fullName.toString(),
+                            password.toString(),
+                            AuthType.FireBaseEmailPassword.name
+                        )
                         if (uid != null) {
                             mDatabase.child(uid).setValue(mUser).addOnCompleteListener {
-                                if (it.isSuccessful){
+                                if (it.isSuccessful) {
                                     binding.signupBtn.isClickable = false
-                                    Snackbar.make(requireView(), "You register successfully", Snackbar.LENGTH_SHORT).show()
-                                }else{
-                                    Toast.makeText(requireContext(), "${it.exception?.message}", Toast.LENGTH_SHORT).show()
+                                    Snackbar.make(
+                                        requireView(),
+                                        "You register successfully",
+                                        Snackbar.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "${it.exception?.message}",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             }
                         }
@@ -167,6 +186,7 @@ class SignUpFragment : Fragment() {
                             task.exception?.message.toString(),
                             Snackbar.LENGTH_SHORT
                         ).show()
+                        Log.d(TAG, "registerUserWithEmailAndPassword: " + task.exception?.message)
                     }
 
                 }

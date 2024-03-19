@@ -24,13 +24,6 @@ const val QURAN_VOICES_BASE_URL = "https://raw.githubusercontent.com/"
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiViewModelsComponents {
-    //    Api Service for Prayer Times Api
-//    @Provides
-//    fun providesBaseUrl() = BASE_URL
-//
-//    @Provides
-//
-//    fun providesQuranVoiceBaseUrl() = QURAN_VOICES_BASE_URL
 
     @Provides
     @Singleton
