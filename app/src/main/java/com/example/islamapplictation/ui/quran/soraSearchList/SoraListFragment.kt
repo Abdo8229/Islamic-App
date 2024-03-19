@@ -5,23 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView.OnQueryTextListener
-import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.example.islamapplictation.MainActivity
-import com.example.islamapplictation.R
 import com.example.islamapplictation.databinding.FragmentSoraListBinding
 import com.example.islamapplictation.data.pojo.Sora
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 class SoraListFragment : Fragment() {
@@ -98,7 +89,7 @@ class SoraListFragment : Fragment() {
         binding.rvSoraList.adapter = adapter
         recursiveLifecycle()
 
-        adapter.soraOnCilckListener(object : SoraListAdapter.OnSoraClickListener {
+        adapter.soraOnClickListener(object : SoraListAdapter.OnSoraClickListener {
             override fun onSoraClick(startPage: Int, soraNumber: Int) {
                 findNavController().navigate(
                     SoraListFragmentDirections.actionSoraListFragmentToQuranFragment(

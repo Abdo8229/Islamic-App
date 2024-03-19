@@ -23,7 +23,7 @@ class SoraListAdapter () :
 
     }
     private  var soraClickListener: OnSoraClickListener? =null
-    fun soraOnCilckListener(soraClickListener: OnSoraClickListener){
+    fun soraOnClickListener(soraClickListener: OnSoraClickListener){
         this.soraClickListener=soraClickListener
     }
 

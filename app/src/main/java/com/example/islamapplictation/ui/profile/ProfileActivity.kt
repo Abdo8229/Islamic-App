@@ -1,9 +1,6 @@
 package com.example.islamapplictation.ui.profile
 
-import android.Manifest
 import android.content.Intent
-import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -17,15 +14,12 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
-import com.example.islamapplictation.MainActivity
 import com.example.islamapplictation.R
 import com.example.islamapplictation.data.pojo.cities.CityTypes
 import com.example.islamapplictation.data.pojo.quranvoice.FilterdQuranVoice
 import com.example.islamapplictation.databinding.ActivityProfileBinding
 import com.example.islamapplictation.prayersnotifivcation.PrayersPreferences
-import com.example.islamapplictation.ui.prayertimes.prayertimeshome.TwoStingSTypeArrayList
 import com.example.islamapplictation.ui.prayertimes.prayertimeshome.TwoTypesSpinnerStringAdapter
 import com.example.islamapplictation.util.CheckPermisions
 import com.google.android.material.snackbar.Snackbar
@@ -164,12 +158,15 @@ class ProfileActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        CheckPermisions(this).onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        CheckPermisions(this).onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     private fun setImageProfile() {
         val profileImage = findViewById<CircleImageView>(R.id.profile_img_user_profile)
-        if (PrayersPreferences(baseContext).profileImageString == null) {
+        if (PrayersPreferences(baseContext).profileImageString == null || PrayersPreferences(
+                baseContext
+            ).profileImageString!!.isEmpty()
+        ) {
             profileImage.setImageResource(R.drawable.round_person_24)
         } else {
             val imageBytes = Base64.decode(PrayersPreferences(baseContext).profileImageString, 0)
@@ -199,7 +196,9 @@ class ProfileActivity : AppCompatActivity() {
     private fun setCitiesAdapter() {
 
         twoTypesSpinnerStringAdapterForCities = TwoTypesSpinnerStringAdapter(
-            TwoStingSTypeArrayList.Cites(citiesArrayList),
+            citiesArrayList.map {
+                it.toString()
+            }.toList(),
             baseContext,
             citiesArrayList
         )
@@ -210,7 +209,9 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun initQuranVoiceSpinnerAdapter() {
         twoTypesSpinnerStringAdapterForQuranVoice = TwoTypesSpinnerStringAdapter(
-            TwoStingSTypeArrayList.QuranVoices(quranVoiceList),
+            quranVoiceList.map {
+                it.name.toString()
+            },
             baseContext,
             quranVoiceList
         )

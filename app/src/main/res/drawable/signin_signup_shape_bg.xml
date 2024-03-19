@@ -5,6 +5,7 @@
 <corners android:topLeftRadius="28dp"
     android:topRightRadius="28dp"/>
     <solid android:color="#FDFDFD"/>
+
     <padding
         android:top="12dp"/>
 </shape>

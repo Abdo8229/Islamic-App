@@ -32,4 +32,5 @@ class QuranPageFragment( pageNumber: Int) : Fragment() {
 
 
     }
+
 }
