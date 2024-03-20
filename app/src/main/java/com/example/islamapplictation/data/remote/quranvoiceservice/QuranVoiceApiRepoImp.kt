@@ -1,5 +1,6 @@
 package com.example.islamapplictation.data.remote.quranvoiceservice
 
+import android.annotation.SuppressLint
 import com.example.islamapplictation.data.pojo.quranvoice.QuranVoice
 import com.example.islamapplictation.util.Resource
 import javax.inject.Inject

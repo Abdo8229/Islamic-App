@@ -3,13 +3,11 @@ package com.example.islamapplictation.di
 import com.example.islamapplictation.data.remote.prayertimes.PrayerTimesApiService
 import com.example.islamapplictation.data.remote.quranvoiceservice.QuranVoiceApiService
 import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
-import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -23,7 +21,7 @@ const val QURAN_VOICES_BASE_URL = "https://raw.githubusercontent.com/"
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiViewModelsComponents  {
+object ApiViewModelsComponents {
 
     @Provides
     @Singleton
@@ -39,12 +37,12 @@ object ApiViewModelsComponents  {
 
     @Provides
     @Singleton
-    fun getInstance( okHttpClient: OkHttpClient): Retrofit {
+    fun getInstance(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
-//          .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
             .build()
     }
 
@@ -58,7 +56,7 @@ object ApiViewModelsComponents  {
             .baseUrl(QURAN_VOICES_BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
-//          .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
             .build()
     }
 

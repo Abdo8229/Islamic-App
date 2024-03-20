@@ -1,8 +1,6 @@
 package com.example.islamapplictation.di
 
 import android.content.Context
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.fragment.app.Fragment
 import com.example.islamapplictation.data.pojo.Zekr
 import com.example.islamapplictation.data.pojo.ZekrTypes
 import com.google.gson.Gson
@@ -10,12 +8,10 @@ import com.google.gson.reflect.TypeToken
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okio.IOException
 import java.io.InputStream
-import java.util.stream.Collectors
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -26,7 +22,7 @@ object AzkarModule {
     @Provides
     @Singleton
     @Named("getAllAzkar")
-     fun getAllAzkar(@ApplicationContext context:Context): ArrayList<Zekr> {
+    fun getAllAzkar(@ApplicationContext context: Context): ArrayList<Zekr> {
         return try {
             val azkarFile: InputStream = context.assets.open("azkar/azkar.json")
             val size: Int = azkarFile.available()
@@ -42,7 +38,7 @@ object AzkarModule {
         }
     }
 
-//    @Provides
+    //    @Provides
 //    @Singleton
 //    @Named("proviedsAzkarByType")
 //    fun proviedsAzkarByType( zekareType: String,
@@ -56,13 +52,10 @@ object AzkarModule {
 //    }
     @Provides
     @Singleton
-    @Named("proviedsAzkarTypes")
-    fun proviedsAzkarTypes(@Named("getAllAzkar")getAllAzkar : ArrayList<Zekr> ): HashSet<ZekrTypes> {
-        return getAllAzkar
-            .stream()
-            .map { zekr -> ZekrTypes(zekr.category) }
-            .collect(Collectors.toCollection { HashSet() })
-
+//    @Named("providesAzkarTypes")
+    fun proviedsAzkarTypes( @Named("getAllAzkar")
+                           getAllAzkar: ArrayList<Zekr>): HashSet<ZekrTypes> {
+        return getAllAzkar.map { zekr -> ZekrTypes(zekr.category) }.toHashSet()
     }
 
 

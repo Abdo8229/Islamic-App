@@ -4,6 +4,4 @@ data class ZekrTypes(
 
     val zekrName:String,
 
-) {
-
-}
+)

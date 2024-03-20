@@ -9,11 +9,13 @@ plugins {
 
 android {
     namespace 'com.example.islamapplictation'
+    //noinspection GradleDependency
     compileSdk 33
 
     defaultConfig {
         applicationId "com.abdelrahman.islamapplictation"
         minSdk 24
+        //noinspection OldTargetApi
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -23,18 +25,18 @@ android {
 
     buildTypes {
         release {
-//            minifyEnabled true
-//            shrinkResources true
-
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    java {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
     }
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '17'
     }
     buildFeatures {
         viewBinding true
@@ -102,7 +104,7 @@ dependencies {
     //    room
     def room_version = "2.5.1"
     implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
+//    annotationProcessor("androidx.room:room-compiler:$room_version")
     // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:$room_version")
 // Kotlin Extensions and Coroutines support for Room
@@ -136,6 +138,8 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:$work_version")
     implementation 'androidx.hilt:hilt-work:1.0.0'
     kapt 'androidx.hilt:hilt-compiler:1.0.0'
+
+
 
 
 }

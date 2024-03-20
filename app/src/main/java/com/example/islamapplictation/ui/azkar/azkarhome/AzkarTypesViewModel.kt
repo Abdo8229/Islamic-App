@@ -15,7 +15,7 @@ import javax.inject.Named
 
 @HiltViewModel
 class AzkarTypesViewModel @Inject constructor(
-    @Named("proviedsAzkarTypes")
+//    @Named("providesAzkarTypes")
     val proviedsAzkarTypes: HashSet<ZekrTypes>
 ) : ViewModel() {
 
