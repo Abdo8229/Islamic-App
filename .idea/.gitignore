@@ -3,7 +3,10 @@
 /workspace.xml
 # GitHub Copilot persisted chat sessions
 /copilot/chatSessions
+<<<<<<< Updated upstream
 .idea
 .gradle
 *.gradle
 gradle/
+=======
+>>>>>>> Stashed changes
