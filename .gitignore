@@ -1,0 +1,9 @@
+/build
+build.gradle
+google-services.json
+proguard-rules.pro
+.idea
+.gradle
+gradle/
+.idea/androidTestResultsUserPreferences.xml
+.idea/inspectionProfiles/
